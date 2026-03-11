@@ -1,8 +1,6 @@
 #include <fstream>
 #include <iostream>
-
 #include "../libraries/libFile.h"
-#include "../libraries/libInput.h"
 
 using namespace std;
 int main() {

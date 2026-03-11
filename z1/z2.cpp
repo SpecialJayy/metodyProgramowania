@@ -1,48 +1,9 @@
 #include <iostream>
 #include <limits>
 #include <algorithm>
+#include "../libraries/libFile.h"
 
 using namespace std;
-
-int inputInteger() {
-    bool check = false;
-    int input;
-    while (!check) {
-        cin >> input;
-        if (!cin.fail()) {
-            check = true;
-        } else {
-            cout << "Nie podano liczby" << endl;
-        }
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-    return input;
-}
-
-int inputPositiveInteger() {
-    bool check = false;
-    int input;
-    while (!check) {
-        input = inputInteger();
-        if (input >= 0) {
-            check = true;
-        } else {
-            cout << "Podano liczbe ujemna" << endl;
-        }
-    }
-    return input;
-}
-
-int inputWithinRange(int min, int max) {
-    int input = 0;
-    input = inputInteger();
-    while(input < min || input > max) {
-        input = inputInteger();
-        cout << "Input not within range " << min << " - " << max << endl;
-    }
-    return input;
-}
 
 //klasa robiąca i zarządzająca dynamiczną tablicą 1-wymiarową
 class dynamicArray {
@@ -153,7 +114,7 @@ public:
     }
 };
 
-int main() {
+int main0() {
     int sets = inputPositiveInteger();
 
     dynamicArray answers(sets);

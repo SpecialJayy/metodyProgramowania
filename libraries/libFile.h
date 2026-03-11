@@ -1,6 +1,8 @@
 #ifndef LIBFILE_H
 #define LIBFILE_H
 #include <iosfwd>
+#include <fstream>
+
 
 /*
  * Funkcja służąca do bezpiecznego otworzenia pliku
