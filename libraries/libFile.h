@@ -3,7 +3,6 @@
 #include <iosfwd>
 #include <fstream>
 
-
 /*
  * Funkcja służąca do bezpiecznego otworzenia pliku
  * @Param fileName - nazwa pliku do otworzenia
