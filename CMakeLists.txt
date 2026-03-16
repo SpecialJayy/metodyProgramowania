@@ -7,4 +7,5 @@ add_executable(metodyProgramowania
         z2/z1.cpp
         libraries/libArray.cpp
         libraries/libFile.cpp
-        libraries/libArray.h)
+        libraries/libArray.h
+        libraries/libInput.cpp)

@@ -20,3 +20,24 @@ void closeFile(std::fstream& file) {
         file.close();
     }
 }
+
+std::fstream createOutputFile(const std::string& fileName) {
+    std::fstream file;
+
+    // budowanie sciezki do folderu outputs
+    std::string path = "../outputs/" + fileName;
+
+    // zabezpieczenie: dodanie .txt jesli brakuje
+    if (path.find(".txt") == std::string::npos) {
+        path += ".txt";
+    }
+
+    // otwieranie w trybie zapisu (std::ios::out)
+    file.open(path, std::ios::out);
+
+    if (!file.is_open()) {
+        throw std::runtime_error("critical error: nie udalo sie utworzyc pliku wyjsciowego -> " + path);
+    }
+
+    return file;
+}

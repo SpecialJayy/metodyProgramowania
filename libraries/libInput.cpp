@@ -19,21 +19,27 @@ int inputInteger() {
     return input;
 }
 
-std::string& inputString() {
+std::string inputString() {
     bool check = false;
     std::string input;
 
     while (!check) {
         std::cin >> input;
+
         if (!std::cin.fail()) {
             check = true;
         } else {
-            std::cout << "Nie podano ciągu znaków" << std::endl;
+            std::cout << "nie podano ciagu znakow\n";
+            std::cin.clear(); // czyscimy flage bledu tylko jesli wystapil
         }
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+
+        // ignore musi byc wykonane zawsze na koncu petli,
+        // zeby pozbyc sie znaku nowej linii (entera) z bufora
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
-};
+
+    return input;
+}
 
 int inputPositiveInteger() {
     bool check = false;

@@ -2,11 +2,19 @@
 #include <iostream>
 #include "../libraries/libFile.h"
 #include "../libraries/libArray.h"
+#include "../libraries/libInput.h"
 
 using namespace std;
 
 int main() {
     fstream seak,seakMesh,seb,sebMesh;
+
+    cout << "Prosze podac nazwe pliku wyjsciowego dla silnikow SEAK" << endl;
+    string fileNameSEAK = inputString();
+
+    cout << "Prosze podac nazwe pliku wyjsciowego dla silnikow SEB" << endl;
+    string fileNameSEB = inputString();
+
     try {
         seak = openFile("../assets/Pliki_wejsciowe_laboratorium2/silnikSEAK/nmSEAK.txt");
         seakMesh = openFile("../assets/Pliki_wejsciowe_laboratorium2/silnikSEAK/siatka_SEAK.txt");
@@ -27,7 +35,10 @@ int main() {
     applyEngines(measuredSEAKEngines,seakMesh);
     applyEngine(unknownSEAKEngine,seak);
 
-    findMatch(measuredSEAKEngines,unknownSEAKEngine);
+    double mseResultsSEAK[81]{}; // tablica na wyniki
+    int bestIdSEAK = calculateMSE(measuredSEAKEngines, unknownSEAKEngine, mseResultsSEAK);
+    // printResults(measuredSEAKEngines, mseResultsSEAK, bestIdSEAK);
+    saveResultsToFile(measuredSEAKEngines, mseResultsSEAK, bestIdSEAK, fileNameSEAK);
 
     //dla silnika SEB
 
@@ -39,7 +50,10 @@ int main() {
     applyEngines(measuredSEBEngines,sebMesh);
     applyEngine(unknownSEBEngine,seb);
 
-    findMatch(measuredSEBEngines,unknownSEBEngine);
+    double mseResultsSEB[81]{}; // tablica na wyniki
+    int bestIdSEB = calculateMSE(measuredSEBEngines, unknownSEBEngine, mseResultsSEB);
+    // printResults(measuredSEBEngines, mseResultsSEB, bestIdSEB);
+    saveResultsToFile(measuredSEBEngines, mseResultsSEB, bestIdSEB, fileNameSEB);
 
     closeFile(seak);
     closeFile(seakMesh);

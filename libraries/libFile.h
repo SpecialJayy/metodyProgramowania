@@ -17,4 +17,6 @@ std::fstream openFile(const std::string& fileName);
 */
 void closeFile(std::fstream& file);
 
+std::fstream createOutputFile(const std::string& fileName);
+
 #endif //LIBFILE_H

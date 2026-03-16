@@ -12,7 +12,7 @@ int inputInteger();
  * funckcja pytająca o wprowadzenie dowolnego ciągu znaków
  * @return zwraca ciąg znaków podany przez użytkownika
 */
-std::string& inputString();
+std::string inputString();
 
 /*
  * funckcja pytająca o wprowadzenie dowolnej liczby całkowitej dodatniej

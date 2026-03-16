@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include "libArray.h"
+#include "libFile.h"
 
 void printEngine(double engineList[106][2]) {
     // wypisywanie 6 parametrow z poczatku wiersza (indeksy 0-5)
@@ -21,58 +22,81 @@ void printEngine(double engineList[106][2]) {
     std::cout << "\n";
 }
 
-void findMatch(double engineList[81][106][2], double unknownEngine[106][2]) {
+int calculateMSE(double engineList[81][106][2], double unknownEngine[106][2], double mseResults[81]) {
     double best = 0.0;
     int bestId = 0;
-
-    // tablica do przechowania wynikow mse
-    double mseResults[81]{};
 
     for (int engine = 0; engine < 81; engine++) {
         double mse = 0.0;
 
-        // zaczynamy od indeksu 6, zeby pominac parametry w wyliczeniach mse
         for (int measurement = 6; measurement < 106; measurement++) {
-            // dla y
             double a = pow(unknownEngine[measurement][1] - engineList[engine][measurement][1], 2);
-
-            // dla x
             double b = pow(unknownEngine[measurement][0] - engineList[engine][measurement][0], 2);
-
             mse += a + b;
         }
 
-        // oryginalny wzor z pierwiastkiem
         mse = sqrt(mse);
-
-        // zapisanie wyniku do tabeli
         mseResults[engine] = mse;
 
-        // pierwszy blad przypisujemy jako najlepszy startowy
-        if (engine == 0) {
-            best = mse;
-            bestId = engine;
-        } else if (mse < best) {
+        if (engine == 0 || mse < best) {
             best = mse;
             bestId = engine;
         }
     }
 
-    // wyswietlenie tabeli wszystkich policzonych mse
+    return bestId;
+}
+
+void printResults(double engineList[81][106][2], double mseResults[81], int bestId) {
     std::cout << "\n=== tabela policzonych mse ===\n";
     for (int i = 0; i < 81; i++) {
         std::cout << "silnik [" << i << "] mse = " << mseResults[i] << "\n";
     }
 
-    // wyswietlenie najlepszego wyniku
     std::cout << "==============================\n";
-    std::cout << "najlepsze mse: " << best << "\n";
+    std::cout << "najlepsze mse: " << mseResults[bestId] << "\n";
     std::cout << "najlepszy silnik: " << bestId << "\n";
     std::cout << "==============================\n\n";
 
-    // wyswietlenie danych najlepszego silnika
     std::cout << "dane pomiarowe dla silnika " << bestId << ":\n";
-    printEngine(engineList[bestId]);
+    printEngine(engineList[bestId]); // korzysta z twojej funkcji printEngine
+}
+
+void saveResultsToFile(double engineList[81][106][2], double mseResults[81], int bestId, const std::string& filename) {
+    try {
+        std::fstream outFile = createOutputFile(filename);
+
+        outFile << "=== tabela policzonych mse ===\n";
+        for (int i = 0; i < 81; i++) {
+            outFile << "silnik [" << i << "] mse = " << mseResults[i] << "\n";
+        }
+
+        outFile << "==============================\n";
+        outFile << "najlepsze mse: " << mseResults[bestId] << "\n";
+        outFile << "najlepszy silnik: " << bestId << "\n";
+        outFile << "==============================\n\n";
+
+        outFile << "dane pomiarowe dla silnika " << bestId << ":\n";
+
+        outFile << "parametry y: ";
+        for(int p = 0; p < 6; p++) outFile << engineList[bestId][p][1] << " ";
+        outFile << "\nparametry x: ";
+        for(int p = 0; p < 6; p++) outFile << engineList[bestId][p][0] << " ";
+        outFile << "\n\n";
+
+        for (int measurement = 6; measurement < 106; measurement++) {
+            outFile << "measurement [" << measurement - 5 << "]: "
+                      << "X = " << engineList[bestId][measurement][0]
+                      << " | Y = " << engineList[bestId][measurement][1]
+                      << "\n";
+        }
+
+        closeFile(outFile);
+        std::cout << "poprawnie zapisano wyniki do pliku: " << filename << "\n";
+
+    } catch (const std::runtime_error& e) {
+        std::cout << e.what() << "\n";
+    }
 }
 
 void applyEngine(double engineList[106][2], std::fstream& file) {
