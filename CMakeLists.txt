@@ -3,7 +3,5 @@ project(metodyProgramowania)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(metodyProgramowania main.cpp
-        z1/z1.cpp
-        z1/z2.cpp
+add_executable(metodyProgramowania
         z2/z1.cpp)
