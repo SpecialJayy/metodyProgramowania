@@ -41,3 +41,10 @@ std::fstream createOutputFile(const std::string& fileName) {
 
     return file;
 }
+
+void saveSubsetToFile(const std::vector<int>& arr, int size, std::fstream& outFile) {
+    for (int i = 1; i <= size; ++i) {
+        outFile << arr[i] << (i == size ? "" : " ");
+    }
+    outFile << "\n";
+}
