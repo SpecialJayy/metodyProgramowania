@@ -6,7 +6,7 @@
 
 /*
  * Funkcja służąca do bezpiecznego otworzenia pliku
- * @Param fileName - nazwa pliku do otworzenia
+ * @Param fileName - sciezka pliku do otworzenia
  * @return otworzony plik
 */
 

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int main() {
+int mainLKII() {
     fstream seak,seakMesh,seb,sebMesh;
 
     cout << "Prosze podac nazwe pliku wyjsciowego dla silnikow SEAK" << endl;
