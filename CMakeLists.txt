@@ -4,9 +4,11 @@ project(metodyProgramowania)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(metodyProgramowania
-        z4/z1.cpp
+        z6/z1.cpp
         libraries/libArray.cpp
         libraries/libFile.cpp
         libraries/libArray.h
         libraries/libInput.cpp
-        z4/z1.cpp)
+        libraries/libGraph.cpp
+        libraries/libGraph.h
+        z6/z1.cpp)

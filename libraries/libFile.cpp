@@ -3,13 +3,18 @@
 #include <iostream>
 #include <string>
 
+enum class EXCEPTION_CODE {
+    openError,readError,writeError
+};
+
+
 std::fstream openFile(const std::string& fileName) {
     std::fstream file;
 
     file.open(fileName, std::ios::in);
 
     if (!file.is_open()) {
-        throw std::runtime_error("Critical error: Nie udalo sie otowrzyc pliku -> " + fileName);
+        throw EXCEPTION_CODE::openError;
     }
 
     return file;
