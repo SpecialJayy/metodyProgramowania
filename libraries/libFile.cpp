@@ -26,7 +26,7 @@ void closeFile(std::fstream& file) {
     }
 }
 
-std::fstream createOutputFile(const std::string& fileName) {
+std::fstream createOutputFile(const std::string &fileName) {
     std::fstream file;
 
     // budowanie sciezki do folderu outputs
@@ -47,11 +47,17 @@ std::fstream createOutputFile(const std::string& fileName) {
     return file;
 }
 
-void saveSubsetToFile(const std::vector<int>& arr, int size, std::fstream& outFile) {
+void saveSubsetToFile(const std::vector<int>& arr, int size, std::fstream outFile) {
     for (int i = 1; i <= size; ++i) {
         outFile << arr[i] << (i == size ? "" : " ");
     }
     outFile << "\n";
+}
+
+void saveVectorToFile(const std::vector<int>& arr, std::fstream& outFile) {
+    for (int i = 0; i < arr.size(); ++i) {
+        outFile << arr[i] << (i == arr.size() - 1 ? "" : " ");
+    }
 }
 
 std::pair<int, int> saddleBackHelper(const std::vector<std::vector<int>>& array, int target, int rows, int cols, bool findFirst, int r, int c, int bestRow, int bestCol) {

@@ -1,79 +1,36 @@
-#include <chrono>
-#include <cmath>
-#include <cstdint>
-#include <ctime>
 #include <iostream>
+#include <vector>
+#include <numeric>
+#include <cmath>
+#include <set>
+#include <chrono>
+#include <fstream>
+#include <string>
 
+#include "../libraries/libFile.h"
 #include "../libraries/libInput.h"
-
+#include "../libraries/libRandom.h"
 using namespace std;
 
-void LCG(int Xmax, int n, int x0) {
-    if (n < 0) return;
-}
-
-vector<int> primeFactorization(int m, vector<int> result) {
-    if (m == 1) return result;
-
-    int i = 2;
-    while (m % i != 0) {
-        i++;
-    }
-
-    m /= i;
-
-    result.push_back(i);
-
-    return primeFactorization(m, result);
-}
-
-int findA(int m, vector<int> factorizedM) {
-    int largestLambda = 0;
-    vector<pair<int,int>> list;
-    for (int a = 2; a < m; a++) {
-        int lambda = 1;
-        while (static_cast<int>(pow(a,lambda)) % m != 1) {
-            lambda++;
-        }
-
-        list.push_back({a, lambda});
-
-        if (lambda > largestLambda) {
-            largestLambda = lambda;
-        }
-    }
-
-    for (int i = 0; i < list.size(); i++) {
-        if (list[i].second == largestLambda && list[i].first != 2) {
-            int a = list[i].first - 1;
-            bool second = true;
-            for (int j = i + 1; j < factorizedM.size(); j++) {
-                if (factorizedM[j] % a != 0) {
-                    second = false;
-                    break;
-                }
-
-                /// tu koniec
-            }
-
-        }
-    }
-}
-
 int main() {
-    int* tab = new int[1];
+    int xMax, n, choice;
 
-    int x0 = tab[0] % 10;
-    int xMax,n;
+    cout << "Podaj maksymalna wartosc Xmax: ";
     xMax = inputPositiveInteger();
+
+    cout << "Podaj ilosc liczb do wygenerowania n:";
     n = inputPositiveInteger();
 
-    int m = xMax + 1;
-    int c = xMax;
+    cout << "\nWybierz tryb pracy generatora:" << endl;
+    cout << "1. Liniowa metoda kongruencyjna (LCG multiplikatywny, c == 0)" << endl;
+    cout << "2. Addytywna metoda kongruencyjna (LCG addytywny, c != 0)" << endl;
 
-    vector<int> v;
-    vector<int> factorizedM = primeFactorization(m, v);
+    choice = inputWithinRange(1,2);
 
-    delete [] tab;
+    vector<int> randomNumbers = Random(xMax, n, choice);
+
+    fstream outFile = createOutputFile("output_program07");
+    saveVectorToFile(randomNumbers,outFile);
+
     return 0;
 }

@@ -15,6 +15,7 @@ add_executable(metodyProgramowania
         libraries/Stack.h
         libraries/LinkedList.cpp
         libraries/LinkedList.h
+        libraries/libRandom.cpp
+        libraries/libRandom.h
         z7/z1.cpp
-        libraries/libRand.cpp
-        libraries/libRand.h)
+)
